@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TodoItem } from '../TodoItem';
 
-export const TodoList = ({ todos, setTodos }) => (
+export const TodoList = ({ filteredTodos, todos, setTodos }) => (
   <div className="todos-list">
     <ul className="todo-list">
-      {todos.map(todo => (
+      {filteredTodos.map(todo => (
         <TodoItem
           todo={todo}
           key={todo.id}
           todos={todos}
+          filteredTodos={filteredTodos}
           setTodos={setTodos}
         />
       ))}
@@ -18,6 +19,7 @@ export const TodoList = ({ todos, setTodos }) => (
 );
 
 TodoList.propTypes = {
+  filteredTodos: PropTypes.arrayOf(PropTypes.object).isRequired,
   todos: PropTypes.arrayOf(PropTypes.object).isRequired,
   setTodos: PropTypes.func.isRequired,
 };

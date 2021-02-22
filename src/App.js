@@ -1,13 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TodoList } from './components/TodoList';
 import { TodoForm } from './components/TodoForm';
+import { TodoFilter } from './components/TodoFilter';
 
 function App() {
   const [todos, setTodos] = useState([
     { id: 1, title: 'Buy bread', completed: false },
     { id: 2, title: 'Buy milk', completed: false },
-    { id: 3, title: 'Call to the office', completed: false },
   ]);
+  const [status, setStatus] = useState('all');
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  const filterHandler = () => {
+    switch (status) {
+      case 'active':
+        setFilteredTodos(todos.map(todo => !todo.completed));
+        break;
+      case 'completed':
+        setFilteredTodos(todos.map(todo => todo.completed));
+        break;
+      default:
+        setFilteredTodos(todos);
+        break;
+    }
+  };
+
+  const changeStatusHandler = (newStatus) => {
+    setStatus(newStatus);
+  };
+
+  useEffect(() => {
+    filterHandler();
+  }, [status, todos]);
+
+  useEffect(() => {
+    setFilteredTodos(todos);
+  }, []);
 
   return (
     <section className="todoapp">
@@ -20,7 +48,11 @@ function App() {
         <input type="checkbox" id="toggle-all" className="toggle-all" />
         <label htmlFor="toggle-all">Mark all as complete</label>
 
-        <TodoList todos={todos} setTodos={setTodos} />
+        <TodoList
+          filteredTodos={filteredTodos}
+          setTodos={setTodos}
+          todos={todos}
+        />
       </section>
 
       <footer className="footer">
@@ -29,19 +61,7 @@ function App() {
           &nbsp;items left
         </span>
 
-        <ul className="filters">
-          <li>
-            <a href="#/" className="selected">All</a>
-          </li>
-
-          <li>
-            <a href="#/active">Active</a>
-          </li>
-
-          <li>
-            <a href="#/completed">Completed</a>
-          </li>
-        </ul>
+        <TodoFilter changeStatusHandler={changeStatusHandler} />
 
         <button type="button" className="clear-completed">
           Clear completed

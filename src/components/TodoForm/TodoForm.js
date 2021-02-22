@@ -6,7 +6,7 @@ export const TodoForm = ({ setTodos }) => {
 
   const addTodo = () => {
     setTodos(prevTodos => [
-      { id: new Date(), title: query, completed: false },
+      { id: Math.random() * 1000, title: query, completed: false },
       ...prevTodos,
     ]);
   };
