@@ -9,12 +9,18 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
-    "web-vitals": "^1.1.0"
+    "web-vitals": "^1.1.0",
+    "node-sass": "^5.0.0"
+  },
+  "devDependencies": {
+    "@mate-academy/eslint-config-react": "*",
+    "eslint": "^7.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint-js": "eslint --ext .jsx,.js ./src/ --fix",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
